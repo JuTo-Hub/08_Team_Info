@@ -4,7 +4,7 @@
 // These data sources hold arrays of information on note-data.
 // ===============================================================================
 
-var noteData = require("../data/noteData");
+const db = require("../db/db.json");
 
 // ===============================================================================
 // ROUTING
@@ -18,7 +18,7 @@ module.exports = function(app) {
   // ---------------------------------------------------------------------------
 
   app.get("/api/notes", function(req, res) {
-    res.json(noteData);
+    res.json(db);
   });
 
   // API POST Requests
@@ -26,15 +26,15 @@ module.exports = function(app) {
   // In each of the below cases, when a user submits form data (a JSON object)
   // ...the JSON is pushed to the appropriate JavaScript array
   // (ex. User fills out a note section... this data is then sent to the server...
-  // Then the server saves the data to the noteData array)
+  // Then the server saves the data to the db.json)
   // ---------------------------------------------------------------------------
 
   app.post("/api/notes", function(req, res) {
     // Note the code here. Our "server" will respond to requests and let users know if they have a table or not.
     // It will do this by sending out the value "true" have a table
     // req.body is available since we're using the body parsing middleware
-    if (noteData.length < 5) {
-      noteData.push(req.body);
+    if (db.length < 5) {
+      db.push(req.body);
       res.json(true);
     }
     else {
@@ -46,7 +46,7 @@ module.exports = function(app) {
 
   app.post("/api/clear", function(req, res) {
     // Empty out the arrays of data
-    noteData.length = 0;
+    db.length = 0;
     res.json({ ok: true });
   });
 };
