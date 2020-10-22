@@ -13,7 +13,7 @@
   This application is a note saver..
   
   ## Installation
-  This app runs in your browser. Open uo the web page and click add note.
+  This app runs in your browser. Open the web page and click "add note".
   
   ## Usage 
   This application is used to create, save, show and delete notes. Click add note, give the note a title, 
