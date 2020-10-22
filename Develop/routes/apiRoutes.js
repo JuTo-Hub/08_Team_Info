@@ -3,9 +3,19 @@
 // We are linking our routes to a series of "data" sources.
 // These data sources hold arrays of information on note-data.
 // ===============================================================================
+const path = require("path");
+const fs = require("fs");
+const dbPath = path.join(__dirname, "../db/db.json");
+const uuid = require('uuid');
 
-const db = require("../db/db.json");
+function loadData(){
+  let rawdata = fs.readFileSync(dbPath);
+  return JSON.parse(rawdata);
+}
 
+function saveData(data){
+  fs.writeFileSync(dbPath, JSON.stringify(data));
+}
 // ===============================================================================
 // ROUTING
 // ===============================================================================
@@ -18,7 +28,7 @@ module.exports = function(app) {
   // ---------------------------------------------------------------------------
 
   app.get("/api/notes", function(req, res) {
-    res.json(db);
+    res.json(loadData());
   });
 
   // API POST Requests
@@ -30,23 +40,21 @@ module.exports = function(app) {
   // ---------------------------------------------------------------------------
 
   app.post("/api/notes", function(req, res) {
+    let data = loadData();
+        let newNote = {title:req.body.title, text:req.body.text, id:uuid.v4()};
+    data.push(newNote);
+    saveData(data);
     // Note the code here. Our "server" will respond to requests and let users know if they have a table or not.
     // It will do this by sending out the value "true" have a table
     // req.body is available since we're using the body parsing middleware
-    if (db.length < 5) {
-      db.push(req.body);
-      res.json(true);
-    }
-    else {
-         }
-  });
+      res.json(true); 
+    });
 
   // ---------------------------------------------------------------------------
   // Used to clear the noteData array. Possibly unnecessary.
 
-  app.post("/api/clear", function(req, res) {
-    // Empty out the arrays of data
-    db.length = 0;
-    res.json({ ok: true });
-  });
-};
+  app.delete("api/notes/:id", function(req,res){
+    let data = loadData();
+    if (index !== -1) api/notes.id.splice(index, 1);
+
+  })}
