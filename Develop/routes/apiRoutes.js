@@ -40,6 +40,7 @@ module.exports = function(app) {
   // ---------------------------------------------------------------------------
 
   app.post("/api/notes", function(req, res) {
+    console.log("post")
     let data = loadData();
         let newNote = {title:req.body.title, text:req.body.text, id:uuid.v4()};
     data.push(newNote);
@@ -53,8 +54,14 @@ module.exports = function(app) {
   // ---------------------------------------------------------------------------
   // Used to clear the noteData array. Possibly unnecessary.
 
-  app.delete("api/notes/:id", function(req,res){
+  app.delete("/api/notes/:id", function(req,res){
+    console.log("delete")
     let data = loadData();
-    if (index !== -1) api/notes.id.splice(index, 1);
+    console.log(req.params.id);
+    data = data.filter((e)=>{
+      return e.id !== req.params.id
+    });
+    saveData(data);
+    return res.json(true);
 
   })}
