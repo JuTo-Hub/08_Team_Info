@@ -55,9 +55,7 @@ module.exports = function(app) {
   // Used to clear the noteData array. Possibly unnecessary.
 
   app.delete("/api/notes/:id", function(req,res){
-    console.log("delete")
     let data = loadData();
-    console.log(req.params.id);
     data = data.filter((e)=>{
       return e.id !== req.params.id
     });
